@@ -166,7 +166,6 @@ public class UserServiceImpl implements UserService {
         Example o = new Example(User.class);
         String username = userVO.getUsername();
         String nickname = userVO.getNickname();
-        Long departmentId = userVO.getDepartmentId();
         Integer sex = userVO.getSex();
         String email = userVO.getEmail();
         Example.Criteria criteria = o.createCriteria();
@@ -181,9 +180,6 @@ public class UserServiceImpl implements UserService {
         }
         if(sex!=null){
             criteria.andEqualTo("sex",sex);
-        }
-        if(departmentId!=null){
-            criteria.andEqualTo("departmentId",departmentId);
         }
 
         criteria.andNotEqualTo("type",0);
@@ -249,7 +245,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void add(UserVO userVO) {
         @NotBlank(message = "用户名不能为空") String username = userVO.getUsername();
-        @NotNull(message = "部门id不能为空") Long departmentId = userVO.getDepartmentId();
         Example o = new Example(User.class);
         o.createCriteria().andEqualTo("username",username);
         int i = userMapper.selectCountByExample(o);
@@ -279,7 +274,6 @@ public class UserServiceImpl implements UserService {
     public void update(Long id, UserEditVO userVO) {
         User dbUser = userMapper.selectByPrimaryKey(id);
         @NotBlank(message = "用户名不能为空") String username = userVO.getUsername();
-        @NotNull(message = "部门不能为空") Long departmentId = userVO.getDepartmentId();
         if(dbUser==null){
             throw new ServiceException("要删除的用户不存在");
         }

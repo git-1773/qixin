@@ -40,9 +40,4 @@ public class UserVO{
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    private String departmentName;
-
-    @NotNull(message = "部门id不能为空")
-    private Long departmentId;
-
 }

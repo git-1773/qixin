@@ -1,6 +1,8 @@
 # qixin
 qixin-bangbang
 
+http://localhost:8081/swagger-ui.html
+
 https://github.com/zykzhangyukang/Xinguan.git
 
 ### ***简化版***

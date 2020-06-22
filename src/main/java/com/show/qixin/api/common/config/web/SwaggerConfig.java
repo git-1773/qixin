@@ -11,9 +11,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-/**
- * Created by zhangyukang on 2019/12/1 22:09
- */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
@@ -23,14 +20,14 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.coderman"))
+                .apis(RequestHandlerSelectors.basePackage("com.show.qixin"))
                 .paths(PathSelectors.any())
                 .build();
     }
     public ApiInfo apiInfo(){
-        Contact contact=new Contact("zhangyukang","http://www.zykcoderman.xyz","3053161401@qq.com");
+        Contact contact=new Contact("ypj","http://www.ypj.com","1773050899@qq.com");
         return new ApiInfoBuilder()
-                .title("新冠物资管理系统 API文档")
+                .title("企信企业信息管理系统 API文档")
                 .description("talk is cheap , show me the code~")
                 .termsOfServiceUrl("")
                 .version("1.0")

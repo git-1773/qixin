@@ -57,8 +57,6 @@ public class UserController {
         return ResponseBean.success((Object) token);
     }
 
-
-
     /**
      * 用户列表
      *
@@ -79,10 +77,22 @@ public class UserController {
      * @return
      */
     @ApiOperation(value = "用户信息", notes = "用户登入信息")
-    @GetMapping("/info")
+    @PostMapping("/info")
     public ResponseBean info() {
         UserInfoVO userInfoVO=userService.info();
         return ResponseBean.success(userInfoVO);
+    }
+
+    /**
+     * 用户信息注册
+     *
+     * @return
+     */
+    @ApiOperation(value = "用户信息", notes = "用户信息注册")
+    @PostMapping("/register")
+    public ResponseBean register(@RequestBody @Validated UserVO userVO) {
+        userService.add(userVO);
+        return ResponseBean.success();
     }
 
     /**
