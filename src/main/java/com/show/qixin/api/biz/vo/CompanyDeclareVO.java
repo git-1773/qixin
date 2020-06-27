@@ -1,24 +1,20 @@
-package com.show.qixin.api.common.domain.biz;
+package com.show.qixin.api.biz.vo;
 
-import com.wuwenze.poi.annotation.Excel;
 import com.wuwenze.poi.annotation.ExcelField;
 import lombok.Data;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 /**
- * 企业注册信息
+ * 企业信息申报vo
  */
 @Data
-@Excel("company_register_info")
-@Table(name = "tb_company_register_info")
-public class CompanyRegisterInfo extends Company {
+public class CompanyDeclareVO {
 
-    @Id
-    @ExcelField(value = "企业编号", width = 50)
-    private Long id;
+    @ExcelField(value = "企业名称", width = 100)
+    @NotBlank(message = "企业名称不能为空")
+    private String name;
 
     //注册资本
     private Integer registeredCapital;
@@ -30,7 +26,7 @@ public class CompanyRegisterInfo extends Company {
     private Integer capitalUnit;
 
     //成立日期
-    @ExcelField(value = "出生日期", dateFormat = "yyyy/MM/dd",width = 100)
+    @ExcelField(value = "成立日期", dateFormat = "yyyy/MM/dd",width = 100)
     private Date setUpDate;
 
     //经营状态

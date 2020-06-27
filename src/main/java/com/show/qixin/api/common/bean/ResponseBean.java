@@ -3,7 +3,7 @@ package com.show.qixin.api.common.bean;
 import lombok.Data;
 
 @Data
-public class ResponseBean {
+public class ResponseBean<T> {
 
     /** 200:操作成功  -1：操作失败**/
 
@@ -14,11 +14,11 @@ public class ResponseBean {
     private String msg;
 
     // 返回的数据
-    private Object data;
+    private T data;
 
     public ResponseBean(){}
 
-    public ResponseBean(int code, String msg, Object data) {
+    public ResponseBean(int code, String msg, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -38,7 +38,7 @@ public class ResponseBean {
         return responseBean;
     }
 
-    public static ResponseBean success(Object data) {
+    public ResponseBean success(T data) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(data);
         responseBean.setCode(200);

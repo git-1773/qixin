@@ -3,8 +3,8 @@ spring:
     active: dev
   datasource:
     username: root
-    password: 7581eabff88be6fe
-    url: jdbc:mysql://129.204.94.139:3306/qixin?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=CTT
+    password: root
+    url: jdbc:mysql://localhost:3306/qixin?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=CTT
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
