@@ -38,7 +38,7 @@ public class ResponseBean<T> {
         return responseBean;
     }
 
-    public ResponseBean success(T data) {
+    public static<T> ResponseBean success(T data) {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(data);
         responseBean.setCode(200);

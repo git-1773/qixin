@@ -1,6 +1,7 @@
 package com.show.qixin.api.biz.vo;
 
 import com.wuwenze.poi.annotation.ExcelField;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -12,10 +13,12 @@ import java.util.Date;
 @Data
 public class CompanyDeclareVO {
 
+    @ApiParam(value = "企业名称")
     @ExcelField(value = "企业名称", width = 100)
     @NotBlank(message = "企业名称不能为空")
     private String name;
 
+    @ApiParam(value = "注册资本")
     //注册资本
     private Integer registeredCapital;
 
@@ -73,11 +76,5 @@ public class CompanyDeclareVO {
 
     //英文名
     private String englishName;
-
-    //最新更新人
-    private String updateBy;
-
-    //最新更新时间
-    private Date updateTime;
 
 }

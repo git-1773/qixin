@@ -44,6 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public ResponseBean declare(CompanyDeclareVO companyDeclareVO) {
         // 校验公司名称是否有效
+
         // 校验公司名称是否存在(不存在时创建公司信息、存在时检查公司状态如果审核通过则需要重新设置为审核中)
         // 保存or更新 公司申报信息
         // 创建公司申报记录
