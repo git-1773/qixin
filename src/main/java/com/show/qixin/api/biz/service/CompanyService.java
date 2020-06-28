@@ -15,13 +15,13 @@ public interface CompanyService {
      * @param name 用户名
      * @return
      */
-    Company findCompanyByName(String name);
+    Company findCompanyByName(String name) throws Exception;
 
     /**
      * 添加企业
      * @param companyVO
      */
-    void add(CompanyVO companyVO);
+    void add(CompanyVO companyVO) throws Exception;
 
     /**
      * 更新企业
@@ -29,19 +29,19 @@ public interface CompanyService {
      * @param id
      * @param companyVO
      */
-    void update(Long id, CompanyEditVO companyVO);
+    void update(Long id, CompanyEditVO companyVO) throws Exception;
 
     /**
      * 企业列表
      * @param companyVO
      * @return
      */
-    PageVO<CompanyVO> findCompanyList(Integer pageNum, Integer pageSize, CompanyVO companyVO);
+    PageVO<CompanyVO> findCompanyList(Integer pageNum, Integer pageSize, CompanyVO companyVO) throws Exception;
 
     /**
      * 企业申报信息提交
      * @param companyDeclareVO
      * @return
      */
-    ResponseBean declare(CompanyDeclareVO companyDeclareVO);
+    ResponseBean declare(CompanyDeclareVO companyDeclareVO) throws Exception;
 }

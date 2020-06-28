@@ -1,9 +1,11 @@
 package com.show.qixin.api.biz.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 import com.show.qixin.api.biz.service.CompanyService;
 import com.show.qixin.api.biz.vo.CompanyDeclareVO;
 import com.show.qixin.api.common.bean.ResponseBean;
+import com.show.qixin.api.common.config.web.plugin.annotation.ApiJsonObject;
+import com.show.qixin.api.common.config.web.plugin.annotation.ApiJsonProperty;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -32,39 +34,40 @@ public class CompanyController {
      */
     @PostMapping("/declare")
     @ApiOperation(value = "企业信息申报提交", notes = "企业信息申报提交")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "name", value = "企业名称", dataType = "String" ,required = true),
-//            @ApiImplicitParam(name = "registeredCapital", value = "注册资本", dataType = "Integer"),
-//            @ApiImplicitParam(name = "actualPaidCapital", value = "实缴资本", dataType = "Integer"),
-//            @ApiImplicitParam(name = "capitalUnit", value = "资本金单位", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "setUpDate", value = "成立日期", dataType = "Date" ),
-//            @ApiImplicitParam(name = "operaStatus", value = "经营状态", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "unifiedSocialCreditCode", value = "统一社会信用代码", dataType = "String" ),
-//            @ApiImplicitParam(name = "businessRegistrationNum", value = "工商注册号", dataType = "String" ),
-//            @ApiImplicitParam(name = "taxpayerIdentificationNum", value = "纳税人识别号", dataType = "String" ),
-//            @ApiImplicitParam(name = "organizationCode", value = "组织机构代码", dataType = "String" ),
-//            @ApiImplicitParam(name = "companyType", value = "公司类型", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "companyIndustry", value = "公司行业", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "approvalDate", value = "核准日期", dataType = "Date" ),
-//            @ApiImplicitParam(name = "registrationAuthority", value = "登记机关", dataType = "String" ),
-//            @ApiImplicitParam(name = "businessTerm", value = "营业期限", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "taxpayerQualification", value = "纳税人资质", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "staffSize", value = "人员规模", dataType = "Integer"),
-//            @ApiImplicitParam(name = "insuredNum", value = "参保人数", dataType = "Integer" ),
-//            @ApiImplicitParam(name = "historyName", value = "曾用名", dataType = "String" ),
-//            @ApiImplicitParam(name = "englishName", value = "英文名", dataType = "String" )
-//    })
-    public ResponseBean declare(@RequestBody @Validated Map<String, Object> map) {
+    @ApiJsonObject({
+            @ApiJsonProperty(name = "name", description = "企业名称", paramType = "String" ,required = true),
+            @ApiJsonProperty(name = "registeredCapital", description = "注册资本", paramType = "Integer"),
+            @ApiJsonProperty(name = "actualPaidCapital", description = "实缴资本", paramType = "Integer"),
+            @ApiJsonProperty(name = "capitalUnit", description = "资本金单位", paramType = "Integer" ),
+            @ApiJsonProperty(name = "setUpDate", description = "成立日期", paramType = "Date" ),
+            @ApiJsonProperty(name = "operaStatus", description = "经营状态", paramType = "Integer" ),
+            @ApiJsonProperty(name = "unifiedSocialCreditCode", description = "统一社会信用代码", paramType = "String" ),
+            @ApiJsonProperty(name = "businessRegistrationNum", description = "工商注册号", paramType = "String" ),
+            @ApiJsonProperty(name = "taxpayerIdentificationNum", description = "纳税人识别号", paramType = "String" ),
+            @ApiJsonProperty(name = "organizationCode", description = "组织机构代码", paramType = "String" ),
+            @ApiJsonProperty(name = "companyType", description = "公司类型", paramType = "Integer" ),
+            @ApiJsonProperty(name = "companyIndustry", description = "公司行业", paramType = "Integer" ),
+            @ApiJsonProperty(name = "approvalDate", description = "核准日期", paramType = "Date" ),
+            @ApiJsonProperty(name = "registrationAuthority", description = "登记机关", paramType = "String" ),
+            @ApiJsonProperty(name = "businessTerm", description = "营业期限", paramType = "Integer" ),
+            @ApiJsonProperty(name = "taxpayerQualification", description = "纳税人资质", paramType = "Integer" ),
+            @ApiJsonProperty(name = "staffSize", description = "人员规模", paramType = "Integer"),
+            @ApiJsonProperty(name = "insuredNum", description = "参保人数", paramType = "Integer" ),
+            @ApiJsonProperty(name = "historyName", description = "曾用名", paramType = "String" ),
+            @ApiJsonProperty(name = "englishName", description = "英文名", paramType = "String" )
+//            @ApiImplicitParam(name = "params", value = "企业申报信息", dataType = "com.show.qixin.api.biz.vo.CompanyDeclareVO" ,required = true),
+    })
+    public ResponseBean declare(@RequestBody @Validated Map<String, Object> params) {
         try {
-            System.out.println(map);
-            Object companyDeclare = map.get("companyDeclare");
+            System.out.println(params);
+            Object companyDeclare = params.get("companyDeclare");
             System.out.println("companyDeclare.toString=> " + companyDeclare.toString());
-            CompanyDeclareVO companyDeclareVO = new ObjectMapper().readValue(companyDeclare.toString(), CompanyDeclareVO.class);
+            CompanyDeclareVO companyDeclareVO = JSON.parseObject(JSON.toJSONString(companyDeclare), CompanyDeclareVO.class);
             return companyService.declare(companyDeclareVO);
         } catch (Exception e) {
             log.error("企业信息申报提交.error" , e);
             e.printStackTrace();
-            return ResponseBean.error("企业信息申报提交.error" + e);
+            return ResponseBean.error(e.getMessage() + e);
         }
     }
 

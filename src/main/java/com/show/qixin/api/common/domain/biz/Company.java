@@ -33,6 +33,8 @@ public class Company {
     )
     private Integer auditStatus;
 
+    private Long createById;
+
     @ExcelField(value = "创建时间", dateFormat = "yyyy年MM月dd日 HH:mm:ss", width = 180)
     private Date createTime;
 
