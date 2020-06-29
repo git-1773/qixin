@@ -4,11 +4,18 @@
 |登录|无|POST|/auth/login|POST|
 * 请求报文:
 ```java
-
+{
+    "username":"系统测试人员",
+    "password":"123456"
+}
 ```
 * 响应报文:
 ```java
-
+{
+    "code": 200,
+    "msg": "成功",
+    "data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTM0Nzc3MzQsInVzZXJuYW1lIjoi57O757uf5rWL6K-V5Lq65ZGYIn0.3KnA1TBRji02_68jqHIgrMAE7bboo74WQhRxez7bLxM"
+}
 ```
 -----
 |接口名称|请求头|请求方式|URL地址|
@@ -16,7 +23,8 @@
 |退出登录|Authorization|POST|/auth/logout|POST|
 * 请求报文:
 ```java
-
+{
+}
 ```
 * 响应报文:
 ```java
