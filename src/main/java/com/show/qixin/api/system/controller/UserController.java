@@ -39,24 +39,6 @@ public class UserController {
     @Autowired
     private LoginLogService loginLogService;
 
-
-    /**
-     * 用户登入
-     *
-     * @param username: 用户名
-     * @param password: 密码
-     * @return
-     */
-    @ApiOperation(value = "用户登入", notes = "接收参数用户名和密码,登入成功后,返回JWTToken")
-    @PostMapping("/login")
-    public ResponseBean login(@NotBlank(message = "账号必填") String username,
-                              @NotBlank(message = "密码必填") String password,
-                              HttpServletRequest request) {
-        String token=userService.login(username,password);
-        loginLogService.add(request);
-        return ResponseBean.success((Object) token);
-    }
-
     /**
      * 用户列表
      *

@@ -25,9 +25,6 @@ import static org.springframework.util.ObjectUtils.isEmpty;
 import static springfox.documentation.schema.Collections.collectionElementType;
 import static springfox.documentation.spi.schema.contexts.ModelContext.inputParam;
 
-/**
- * Created by yueh on 2018/9/13.
- */
 public class ModelCache {
 
     private Map<String, Model> knownModels = new HashMap<>();
@@ -243,7 +240,7 @@ public class ModelCache {
             if (isNullOrEmpty(description) && !isEmpty(param)) {
                 description = param.value();
             }
-            String example = property.description();
+            String example = property.example();
             if (isNullOrEmpty(example) && !isEmpty(param)) {
                 example = param.example();
             }

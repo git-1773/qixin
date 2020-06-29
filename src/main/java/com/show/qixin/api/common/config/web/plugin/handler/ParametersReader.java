@@ -5,6 +5,7 @@ import com.fasterxml.classmate.TypeResolver;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.show.qixin.api.common.config.web.plugin.GlobalString;
 import com.show.qixin.api.common.config.web.plugin.ModelCache;
 import com.show.qixin.api.common.config.web.plugin.annotation.ApiJsonObject;
 import com.show.qixin.api.common.config.web.plugin.annotation.ApiSingleParam;
@@ -67,7 +68,10 @@ public class ParametersReader implements OperationBuilderPlugin {
         List<ResolvedMethodParameter> methodParameters = context.getParameters();
 
         Map<String, ApiSingleParam> paramMap = new HashMap<>();
-        Field[] fields = ModelCache.getInstance().getParamClass().getDeclaredFields();
+        System.out.println("ModelCache.getInstance()==> " + ModelCache.getInstance());
+        System.out.println("ModelCache.getInstance().getParamClass()==> " + ModelCache.getInstance().getParamClass());
+//        Field[] fields = ModelCache.getInstance().getParamClass().getDeclaredFields();
+        Field[] fields = GlobalString.class.getDeclaredFields();
         String type = new String();
         for (Field field : fields) {
             if (field.isAnnotationPresent(ApiSingleParam.class)) {

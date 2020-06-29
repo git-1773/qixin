@@ -218,13 +218,13 @@ public class ServiceModelToSwagger2Mapper extends ServiceModelToSwagger2MapperIm
         return list;
     }
 
-    protected List<io.swagger.models.parameters.Parameter> parameterListToParameterList(List<springfox.documentation.service.Parameter> list) {
+    protected List<io.swagger.models.parameters.Parameter> parameterListToParameterList(List<Parameter> list) {
         if ( list == null ) {
             return null;
         }
 
         List<io.swagger.models.parameters.Parameter> list1 = new ArrayList<io.swagger.models.parameters.Parameter>( list.size() );
-        for ( springfox.documentation.service.Parameter parameter : list ) {
+        for ( Parameter parameter : list ) {
             list1.add( parameterMapper.mapParameter( parameter ) );
         }
 

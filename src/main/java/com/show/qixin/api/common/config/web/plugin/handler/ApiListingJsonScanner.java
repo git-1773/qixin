@@ -192,8 +192,8 @@ public class ApiListingJsonScanner extends ApiListingScanner {
         return from(resourceGroups).toSortedList(resourceGroupComparator());
     }
 
-    static com.google.common.base.Predicate<ApiDescription> belongsTo(final String groupName) {
-        return new com.google.common.base.Predicate<ApiDescription>() {
+    static Predicate<ApiDescription> belongsTo(final String groupName) {
+        return new Predicate<ApiDescription>() {
             @Override
             public boolean apply(ApiDescription input) {
                 return !input.getGroupName().isPresent()
@@ -202,8 +202,8 @@ public class ApiListingJsonScanner extends ApiListingScanner {
         };
     }
 
-    private static com.google.common.base.Function<ApiDescription, ResourceGroup> toResourceGroups() {
-        return new com.google.common.base.Function<ApiDescription, ResourceGroup>() {
+    private static Function<ApiDescription, ResourceGroup> toResourceGroups() {
+        return new Function<ApiDescription, ResourceGroup>() {
             @Override
             public ResourceGroup apply(ApiDescription input) {
                 return new ResourceGroup(
@@ -228,7 +228,7 @@ public class ApiListingJsonScanner extends ApiListingScanner {
         }
 
         private Function<Class<?>, String> resourcePathExtractor() {
-            return new com.google.common.base.Function<Class<?>, String>() {
+            return new Function<Class<?>, String>() {
                 @Override
                 public String apply(Class<?> input) {
                     String path = Iterables.getFirst(Arrays.asList(paths(input)), "");
@@ -253,7 +253,7 @@ public class ApiListingJsonScanner extends ApiListingScanner {
             return new String[]{};
         }
 
-        private com.google.common.base.Optional<? extends Class<?>> controllerClass() {
+        private Optional<? extends Class<?>> controllerClass() {
             return resourceGroup.getControllerClass();
         }
     }

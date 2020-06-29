@@ -65,9 +65,9 @@ public class CompanyController {
             CompanyDeclareVO companyDeclareVO = JSON.parseObject(JSON.toJSONString(companyDeclare), CompanyDeclareVO.class);
             return companyService.declare(companyDeclareVO);
         } catch (Exception e) {
-            log.error("企业信息申报提交.error" , e);
+            log.error("企业信息申报提交.error." + e.getMessage(), e);
             e.printStackTrace();
-            return ResponseBean.error(e.getMessage() + e);
+            return ResponseBean.error(e.getMessage());
         }
     }
 

@@ -38,9 +38,6 @@ import static springfox.documentation.swagger.annotations.Annotations.resolvedTy
 import static springfox.documentation.swagger.readers.operation.ResponseHeaders.headers;
 import static springfox.documentation.swagger.readers.operation.ResponseHeaders.responseHeaders;
 
-/**
- * Created by yueh on 2018/9/13.
- */
 @Primary
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER + 3)

@@ -11,9 +11,6 @@ import java.util.Random;
  * 随机字符验证码生成工具类
  * @author Exrickx
  */
-/**
- * Created by zhangyukang on 2019/12/18 15:38
- */
 public class CreateVerifyCode {
         /**
          * 图片的宽度
