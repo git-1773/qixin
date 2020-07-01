@@ -2,7 +2,10 @@ package com.show.qixin.api.common.domain.biz;
 
 import lombok.Data;
 
+import javax.persistence.Table;
+
 @Data
+@Table(name = "tb_company_declare_history")
 public class CompanyDeclareHistory {
 
     /**

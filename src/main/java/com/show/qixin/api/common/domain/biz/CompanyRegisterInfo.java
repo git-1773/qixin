@@ -14,27 +14,27 @@ import java.util.Date;
 @Data
 @Excel("company_register_info")
 @Table(name = "tb_company_register_info")
-public class CompanyRegisterInfo extends Company {
+public class CompanyRegisterInfo {
 
     @Id
     @ExcelField(value = "企业编号", width = 50)
     private Long id;
 
     //注册资本
-    private Integer registeredCapital;
+    private Integer registeredCapital = 0;
 
     //实缴资本
-    private Integer actualPaidCapital;
+    private Integer actualPaidCapital = 0;
 
     //资本金单位
-    private Integer capitalUnit;
+    private Integer capitalUnit = 0;
 
     //成立日期
     @ExcelField(value = "出生日期", dateFormat = "yyyy/MM/dd",width = 100)
     private Date setUpDate;
 
     //经营状态
-    private Integer operaStatus;
+    private Integer operaStatus = 0;
 
     //统一社会信用代码
     private String unifiedSocialCreditCode;
@@ -49,10 +49,10 @@ public class CompanyRegisterInfo extends Company {
     private String organizationCode;
 
     //公司类型
-    private Integer companyType;
+    private Integer companyType = 0;
 
     //公司行业
-    private Integer companyIndustry;
+    private Integer companyIndustry = 0;
 
     //核准日期
     private Date approvalDate;
@@ -64,13 +64,13 @@ public class CompanyRegisterInfo extends Company {
     private Date businessTerm;
 
     //纳税人资质
-    private Integer taxpayerQualification;
+    private Integer taxpayerQualification = 0;
 
     //人员规模
-    private Integer staffSize;
+    private Integer staffSize = 0;
 
     //参保人数
-    private Integer insuredNum;
+    private Integer insuredNum = 0;
 
     //曾用名
     private String historyName;
@@ -79,7 +79,7 @@ public class CompanyRegisterInfo extends Company {
     private String englishName;
 
     //最新更新人
-    private String updateBy;
+    private String updateByName;
 
     //最新更新时间
     private Date updateTime;

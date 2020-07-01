@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Date;
+
 @Slf4j
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -65,19 +67,35 @@ public class CompanyServiceImpl implements CompanyService {
         Company companyOne = new Company();
         companyOne.setName(companyDeclareVO.getName());
         companyOne = companyMapper.selectOne(companyOne);
-        if(companyOne.getId() == null || companyOne.getId() < 1){
+        if(companyOne == null){
             //不存在则新建保存
             companyOne = CompanyConverter.converterToCompany(companyDeclareVO);
+            companyOne.setAuditStatus(1);
+            companyOne.setCreateById(loginUser.getId());
+            companyOne.setCreateTime(new Date());
+            companyOne.setUpdateById(companyOne.getCreateById());
+            companyOne.setUpdateTime(companyOne.getCreateTime());
             int insert = companyMapper.insert(companyOne);
             if(insert < 1){
                 return ResponseBean.error("企业信息保存异常");
             }
+            CompanyRegisterInfo companyRegisterInfo = CompanyRegisterInfoConverter.converterToCompanyRegisterInfo(companyDeclareVO);
+            companyRegisterInfo.setId(companyOne.getId());
+            companyRegisterInfo.setUpdateByName(loginUser.getNickname());
+            companyRegisterInfo.setUpdateTime(new Date());
+            int insertCRI = companyRegisterInfoMapper.insert(companyRegisterInfo);
+            if(insertCRI < 1){
+                throw new Exception("企业申报信息保存异常");
+            }
         }else {
             // 检查已存在企业申报人,是否和当前申报人一致,一致则更新,不一致则提示,该企业已被他人申报
-            if(companyOne.getCreateById() == loginUser.getId()){
+            if(companyOne.getCreateById().equals(loginUser.getId())){
                 CompanyRegisterInfo companyRegisterInfo = companyRegisterInfoMapper.selectByPrimaryKey(companyOne.getId());
                 if(companyRegisterInfo == null){
                     companyRegisterInfo = CompanyRegisterInfoConverter.converterToCompanyRegisterInfo(companyDeclareVO);
+                    companyRegisterInfo.setId(companyOne.getId());
+                    companyRegisterInfo.setUpdateByName(loginUser.getNickname());
+                    companyRegisterInfo.setUpdateTime(new Date());
                     int insert = companyRegisterInfoMapper.insert(companyRegisterInfo);
                     if(insert < 1){
                         throw new Exception("企业申报信息保存异常");
@@ -91,9 +109,10 @@ public class CompanyServiceImpl implements CompanyService {
                         throw new Exception("企业申报信息更新异常");
                     }
                 }
+            }else {
+                log.info("姓名[" + loginUser.getNickname() + "]重复申报企业[" + companyDeclareVO.getName() + "]的信息,userId=" + loginUser.getId());
+                throw new Exception("企业[" + companyDeclareVO.getName() + "]已被他人申报！");
             }
-
-
         }
         // 校验公司名称是否存在(不存在时创建公司信息、存在时检查公司状态如果审核通过则需要重新设置为审核中)
         // 保存or更新 公司申报信息
@@ -102,7 +121,7 @@ public class CompanyServiceImpl implements CompanyService {
         companyDeclareHistory.setCompanyId(companyOne.getId());
         companyDeclareHistory.setCompanyName(companyOne.getName());
         companyDeclareHistory.setCreateById(loginUser.getId());
-        companyDeclareHistory.setCompanyName(loginUser.getNickname());
+        companyDeclareHistory.setCreateByName(loginUser.getNickname());
         companyDeclareHistory.setContentJsonStr(JSON.toJSONString(companyDeclareVO));
         int insert = companyDeclareHistoryMapper.insert(companyDeclareHistory);
         if(insert < 1){

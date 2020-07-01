@@ -437,3 +437,55 @@ CREATE TABLE `tb_user_role` (
 -- ----------------------------
 INSERT INTO `tb_user_role` VALUES ('184', '125');
 INSERT INTO `tb_user_role` VALUES ('6', '0');
+
+CREATE TABLE `tb_company` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业ID',
+  `name` varchar(50) NOT NULL COMMENT '企业名称',
+  `logo` varchar(100) DEFAULT NULL,
+  `audit_status` int(1) NOT NULL COMMENT '审核状态 1=未审核,2=审核中、待审核, 3=审核通过, 4=审核未通过',
+  `create_by_id` bigint(20) NOT NULL COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_by_id` bigint(20) NOT NULL COMMENT '最新更新人',
+  `update_time` datetime NOT NULL COMMENT '最新更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='企业信息表';
+
+CREATE TABLE `tb_company_declare_history` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '企业信息申报历史记录ID',
+  `company_id` bigint(20) NOT NULL COMMENT '企业ID',
+  `company_name` varchar(50) NOT NULL COMMENT '企业名称',
+  `create_by_id` bigint(20) NOT NULL COMMENT '创建人id',
+  `create_by_name` varchar(50) NOT NULL COMMENT '创建人name',
+  `content_json_str` varchar(1000) NOT NULL COMMENT '本次申报内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='企业信息申报历史记录表';
+
+CREATE TABLE `tb_company_register_info` (
+    `id` bigint(20) NOT NULL COMMENT '企业注册信息ID',
+    `registered_capital` int(5) NOT NULL DEFAULT '0' COMMENT '注册资本',
+    `actual_paid_capital` int(5) NOT NULL DEFAULT '0' COMMENT '实缴资本',
+    `capital_unit` int(1) NOT NULL DEFAULT '0' COMMENT '资本金单位',
+    `set_up_date` datetime DEFAULT '1970-01-01 00:00:00' COMMENT '成立日期',
+    `opera_status` int(1) NOT NULL DEFAULT '0' COMMENT '经营状态',
+    `unified_social_credit_code` varchar(20) DEFAULT NULL COMMENT '统一社会信用代码',
+    `business_registration_num` varchar(20) DEFAULT NULL COMMENT '工商注册号',
+    `taxpayer_identification_num` varchar(20) DEFAULT NULL COMMENT '纳税人识别号',
+    `organization_code` varchar(20) DEFAULT NULL COMMENT '组织机构代码',
+    `company_type` int(1) NOT NULL DEFAULT '0' COMMENT '公司类型',
+    `company_industry` int(1) NOT NULL DEFAULT '0' COMMENT '公司行业',
+    `approval_date` datetime DEFAULT '1970-01-01 00:00:00' COMMENT '核准日期',
+    `registration_authority` varchar(20) DEFAULT NULL COMMENT '登记机关',
+    `business_term` datetime DEFAULT '1970-01-01 00:00:00' COMMENT '营业期限',
+    `taxpayer_qualification` int(1) NOT NULL DEFAULT '0' COMMENT '纳税人资质',
+    `staff_size` int(1) NOT NULL DEFAULT '0' COMMENT '人员规模',
+    `insured_num` int(6) NOT NULL DEFAULT '0' COMMENT '参保人数',
+    `history_name` varchar(20) DEFAULT NULL COMMENT '曾用名',
+    `english_name` varchar(50) DEFAULT NULL COMMENT '英文名',
+    `update_by_name` varchar(50) NOT NULL COMMENT '最新更新人',
+    `update_time` datetime NOT NULL COMMENT '最新更新时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='企业注册信息表';
+
+
+
+

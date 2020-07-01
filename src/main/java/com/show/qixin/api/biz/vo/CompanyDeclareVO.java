@@ -23,17 +23,17 @@ public class CompanyDeclareVO {
     private Integer registeredCapital;
 
     //实缴资本
-    private Integer actualPaidCapital;
+    private Integer actualPaidCapital = 0;
 
     //资本金单位
-    private Integer capitalUnit;
+    private Integer capitalUnit = 0;
 
     //成立日期
     @ExcelField(value = "成立日期", dateFormat = "yyyy/MM/dd",width = 100)
     private Date setUpDate;
 
     //经营状态
-    private Integer operaStatus;
+    private Integer operaStatus = 0;
 
     //统一社会信用代码
     private String unifiedSocialCreditCode;
@@ -48,10 +48,10 @@ public class CompanyDeclareVO {
     private String organizationCode;
 
     //公司类型
-    private Integer companyType;
+    private Integer companyType = 0;
 
     //公司行业
-    private Integer companyIndustry;
+    private Integer companyIndustry = 0;
 
     //核准日期
     private Date approvalDate;
@@ -63,13 +63,13 @@ public class CompanyDeclareVO {
     private Date businessTerm;
 
     //纳税人资质
-    private Integer taxpayerQualification;
+    private Integer taxpayerQualification = 0;
 
     //人员规模
-    private Integer staffSize;
+    private Integer staffSize = 0;
 
     //参保人数
-    private Integer insuredNum;
+    private Integer insuredNum = 0;
 
     //曾用名
     private String historyName;

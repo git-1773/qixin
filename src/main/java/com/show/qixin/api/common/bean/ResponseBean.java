@@ -42,7 +42,7 @@ public class ResponseBean<T> {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(data);
         responseBean.setCode(200);
-        responseBean.setMsg("成功");
+        responseBean.setMsg("操作成功");
         return responseBean;
     }
 
@@ -58,7 +58,7 @@ public class ResponseBean<T> {
         ResponseBean responseBean = new ResponseBean();
         responseBean.setData(null);
         responseBean.setCode(200);
-        responseBean.setMsg("Success");
+        responseBean.setMsg("操作成功");
         return responseBean;
     }
 }
