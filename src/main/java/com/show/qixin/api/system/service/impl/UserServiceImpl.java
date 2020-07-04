@@ -3,6 +3,7 @@ package com.show.qixin.api.system.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.show.qixin.api.common.bean.LoginUser;
+import com.show.qixin.api.common.bean.ResponseBean;
 import com.show.qixin.api.common.config.jwt.JWTToken;
 import com.show.qixin.api.common.domain.system.*;
 import com.show.qixin.api.common.exception.ErrorCodeEnum;
@@ -24,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.validation.constraints.NotBlank;
@@ -61,6 +63,13 @@ public class UserServiceImpl implements UserService {
     public User findUserByName(String name) {
         User t = new User();
         t.setUsername(name);
+        return userMapper.selectOne(t);
+    }
+
+    @Override
+    public User findUserByPhoneNum(String phoneNum) {
+        User t = new User();
+        t.setPhoneNumber(phoneNum);
         return userMapper.selectOne(t);
     }
 
@@ -235,6 +244,58 @@ public class UserServiceImpl implements UserService {
                     UserStatusEnum.AVAILABLE.getStatusCode());
             userMapper.updateByPrimaryKeySelective(t);
         }
+    }
+
+    /**
+     * 用户信息注册@param userVO
+     * @return
+     */
+    @Transactional
+    @Override
+    public ResponseBean register(UserVO userVO) {
+        if(userVO == null){
+            return ResponseBean.error("参数无效");
+        }
+        if(StringUtils.isEmpty(userVO.getUsername())){
+            return ResponseBean.error("参数用户名无效");
+        }
+        if(StringUtils.isEmpty(userVO.getPassword())){
+            return ResponseBean.error("参数密码无效");
+        }
+        if(StringUtils.isEmpty(userVO.getNickname())){
+            return ResponseBean.error("参数真实姓名无效");
+        }
+        if(StringUtils.isEmpty(userVO.getPhoneNumber())){
+            return ResponseBean.error("参数手机号无效");
+        }
+//        @NotBlank(message = "用户名不能为空") String username = userVO.getUsername();
+//        @NotBlank(message = "密码不能为空") String password = userVO.getPassword();
+        Example o = new Example(User.class);
+        o.createCriteria().andEqualTo("username",userVO.getUsername());
+        int i = userMapper.selectCountByExample(o);
+        if(i!=0){
+            return ResponseBean.error("该用户名[" + userVO.getUsername() + "]已被占用");
+//            throw new ServiceException("该用户名[" + userVO.getUsername() + "]已被占用");
+        }
+        Example o1 = new Example(User.class);
+        o.createCriteria().andEqualTo("phoneNumber",userVO.getPhoneNumber());
+        int i1 = userMapper.selectCountByExample(o);
+        if(i!=0){
+            return ResponseBean.error("该手机号[" + userVO.getPhoneNumber() + "]已被注册");
+//            throw new ServiceException("该用户名[" + userVO.getUsername() + "]已被占用");
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userVO,user);
+        String salt=UUID.randomUUID().toString().substring(0,32);
+        user.setPassword(MD5Utils.md5Encryption(user.getPassword(), salt));
+        user.setModifiedTime(new Date());
+        user.setCreateTime(new Date());
+        user.setSalt(salt);
+        user.setType(UserTypeEnum.SYSTEM_USER.getTypeCode());//添加的用户默认是普通用户
+        user.setStatus(UserStatusEnum.AVAILABLE.getStatusCode());//添加的用户默认启用
+        user.setAvatar("http://badidol.com/uploads/images/avatars/201910/24/18_1571921832_HG9E55x9NY.jpg");
+        userMapper.insert(user);
+        return ResponseBean.success();
     }
 
     /**
@@ -424,4 +485,5 @@ public class UserServiceImpl implements UserService {
         userInfoVO.setIsAdmin(loginUser.getUser().getType()==UserTypeEnum.SYSTEM_ADMIN.getTypeCode());
         return userInfoVO;
     }
+
 }

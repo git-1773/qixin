@@ -1,5 +1,6 @@
 package com.show.qixin.api.system.service;
 
+import com.show.qixin.api.common.bean.ResponseBean;
 import com.show.qixin.api.common.domain.system.Menu;
 import com.show.qixin.api.common.domain.system.Role;
 import com.show.qixin.api.common.domain.system.User;
@@ -16,6 +17,8 @@ public interface UserService {
      * @return
      */
      User findUserByName(String name);
+
+     User findUserByPhoneNum(String phoneNum);
 
     /**
      * 查询用户角色
@@ -124,5 +127,7 @@ public interface UserService {
      * @return
      */
     UserInfoVO info();
+
+    ResponseBean register(UserVO userVO);
 
 }

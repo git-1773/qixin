@@ -1,5 +1,6 @@
 package com.show.qixin.api.system.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.show.qixin.api.common.annotation.ControllerEndpoint;
 import com.show.qixin.api.common.bean.ResponseBean;
 import com.show.qixin.api.common.domain.system.Role;
@@ -12,18 +13,18 @@ import com.show.qixin.api.system.vo.*;
 import com.wuwenze.poi.ExcelKit;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotBlank;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @Validated
@@ -65,16 +66,24 @@ public class UserController {
         return ResponseBean.success(userInfoVO);
     }
 
+
+
     /**
      * 用户信息注册
      *
      * @return
      */
-    @ApiOperation(value = "用户信息", notes = "用户信息注册")
+    @ApiOperation(value = "用户信息注册", notes = "用户信息注册")
     @PostMapping("/register")
-    public ResponseBean register(@RequestBody @Validated UserVO userVO) {
-        userService.add(userVO);
-        return ResponseBean.success();
+    public ResponseBean register(@RequestBody @Validated  Map<String, Object> params) {
+        try {
+            UserVO userVO = JSON.parseObject(JSON.toJSONString(params), UserVO.class);
+            return userService.register(userVO);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            e.printStackTrace();
+            return ResponseBean.error(e.getMessage());
+        }
     }
 
     /**
