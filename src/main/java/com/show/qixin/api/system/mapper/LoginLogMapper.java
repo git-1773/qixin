@@ -12,9 +12,10 @@ public interface LoginLogMapper extends Mapper<LoginLog> {
 
     /**
      * 用户登入报表
+     *
      * @param userVO
      * @return
      */
-    List<Map<String,Object>> userLoginReport(UserVO userVO);
+    List<Map<String, Object>> userLoginReport(UserVO userVO);
 
 }
